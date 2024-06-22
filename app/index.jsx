@@ -2,13 +2,31 @@ import { StatusBar } from "expo-status-bar";
 import { Redirect, router } from "expo-router";
 import { View, Text, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import * as Font from 'expo-font';
 import { images } from "../constants";
 import { CustomButton, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
+import { useEffect } from "react";
 
 const Welcome = () => {
   const { loading, isLogged } = useGlobalContext();
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      'Poppins-ExtraBold': require('../assets/fonts/Poppins-ExtraBold.ttf'),
+      'Poppins-ExtraLight': require('../assets/fonts/Poppins-ExtraLight.ttf'),
+      'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+      'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+      'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+      'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf'),
+    });
+  };
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
 
   if (!loading && isLogged) return <Redirect href="/home" />;
 
